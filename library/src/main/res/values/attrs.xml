@@ -1,0 +1,6 @@
+<resources>
+    <declare-styleable name="DailyCoordinatorLayout">
+        <attr name="tab" format="reference" />
+        <attr name="content" format="reference" />
+    </declare-styleable>
+</resources>
