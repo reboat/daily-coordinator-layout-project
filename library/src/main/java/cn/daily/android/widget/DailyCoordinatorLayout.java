@@ -3,9 +3,11 @@ package cn.daily.android.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.design.widget.AppBarLayout;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import cn.daily.android.listener.DailyCoordinatorChangeStateListener;
 
@@ -37,6 +39,7 @@ public class DailyCoordinatorLayout extends FrameLayout implements AppBarLayout.
 
         int tabLayout = a.getResourceId(R.styleable.DailyCoordinatorLayout_tab, 0);
         int contentLayout = a.getResourceId(R.styleable.DailyCoordinatorLayout_content, 0);
+        String title=a.getString(R.styleable.DailyCoordinatorLayout_title);
 
         if (tabLayout != 0) {
             inflate(getContext(), tabLayout, (ViewGroup) findViewById(R.id.tab_container));
@@ -50,6 +53,8 @@ public class DailyCoordinatorLayout extends FrameLayout implements AppBarLayout.
 
         mAppBarLayout = findViewById(R.id.app_bar);
         mAppBarLayout.addOnOffsetChangedListener(this);
+        TextView titleView=findViewById(R.id.title);
+        titleView.setText(TextUtils.isEmpty(title)?"新闻":title);
     }
 
 

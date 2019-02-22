@@ -46,6 +46,7 @@
                         android:src="@mipmap/hearde_logo" />
 
                     <TextView
+                        android:id="@+id/title"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/icon"

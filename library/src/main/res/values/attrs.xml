@@ -2,5 +2,6 @@
     <declare-styleable name="DailyCoordinatorLayout">
         <attr name="tab" format="reference" />
         <attr name="content" format="reference" />
+        <attr name="title" format="string|reference"/>
     </declare-styleable>
 </resources>
