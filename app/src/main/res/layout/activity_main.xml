@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <cn.daily.android.widget.DailyCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@android:color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:tab="@layout/daily_tab"
+    android:background="@android:color/white"
     app:content="@layout/daily_content"
-    tools:context=".MainActivity"
-    />
+    app:tab="@layout/daily_tab"
+    tools:context=".MainActivity">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v4.view.ViewPager>
+</cn.daily.android.widget.DailyCoordinatorLayout>

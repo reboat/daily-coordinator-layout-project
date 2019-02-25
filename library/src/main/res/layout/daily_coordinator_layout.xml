@@ -1,151 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    >
 
-    <android.support.design.widget.CoordinatorLayout
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/content_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        tools:context=".ScrollingActivity">
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/header_height"
-            android:background="@android:color/transparent"
-            app:layout_behavior="cn.daily.android.behavior.DailyCoordinatorBehavior">
-
-            <RelativeLayout
-                android:id="@+id/all"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                app:layout_scrollFlags="scroll|enterAlways">
-
-                <ImageView
-                    android:id="@+id/header_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop" />
-
-                <LinearLayout
-                    android:gravity="bottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="55dp">
-
-                    <ImageView
-                        android:id="@+id/icon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:src="@mipmap/hearde_logo" />
-
-                    <TextView
-                        android:id="@+id/title"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/icon"
-                        android:text="新闻"
-                        android:textColor="#ff222222"
-                        android:textSize="22sp" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/scrolled_right_view"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="80dp"
-                    android:src="@mipmap/service" />
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/fixed_root"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <FrameLayout
-                        android:id="@+id/tab_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"></FrameLayout>
-
-                    <ImageView
-                        android:id="@+id/tab_more"
-                        android:layout_width="23dp"
-                        android:layout_height="23dp"
-                        android:src="@drawable/tab_more" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/scrolled_anchor_view"
-                    android:layout_width="0dp"
-                    android:layout_height="25dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
-                    android:background="@drawable/search_background"
-                    android:src="@android:drawable/ic_menu_search"
-                    android:visibility="invisible" />
-            </LinearLayout>
-        </android.support.design.widget.AppBarLayout>
-
-        <FrameLayout
-            android:id="@+id/content_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        </FrameLayout>
-    </android.support.design.widget.CoordinatorLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/header_height"
-        android:gravity="right"
-        app:layout_scrollFlags="scroll|enterAlways">
-
-        <LinearLayout
-            android:id="@+id/scrolled_view"
-            android:layout_width="match_parent"
-            android:layout_height="22dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="120dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginRight="48dp"
-            android:background="@drawable/search_background"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="搜索"
-                android:textColor="@color/_ff999999"
-                android:textSize="11sp" />
-
-            <ImageView
-                android:id="@+id/right_view"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:src="@android:drawable/ic_menu_search" />
-        </LinearLayout>
-    </LinearLayout>
-</FrameLayout>
+    </android.support.v4.view.ViewPager>
+</android.support.design.widget.CoordinatorLayout>

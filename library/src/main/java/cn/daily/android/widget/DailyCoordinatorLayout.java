@@ -3,6 +3,7 @@ package cn.daily.android.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ import android.widget.TextView;
 import cn.daily.android.listener.DailyCoordinatorChangeStateListener;
 
 
-public class DailyCoordinatorLayout extends FrameLayout implements AppBarLayout.OnOffsetChangedListener {
+public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarLayout.OnOffsetChangedListener {
     private DailyCoordinatorChangeStateListener mDailyCoordinatorChangeStateListener;
     private State mCurrentState = State.IDLE;
     private AppBarLayout mAppBarLayout;
@@ -33,21 +34,23 @@ public class DailyCoordinatorLayout extends FrameLayout implements AppBarLayout.
     }
 
     private void init(AttributeSet attrs, int defStyleAttr) {
-        inflate(getContext(), R.layout.daily_coordinator_layout, this);
+        inflate(getContext(), R.layout.content_layout, this);
+        inflate(getContext(), R.layout.search_layout, this);
+
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.DailyCoordinatorLayout, defStyleAttr, 0);
 
         int tabLayout = a.getResourceId(R.styleable.DailyCoordinatorLayout_tab, 0);
-        int contentLayout = a.getResourceId(R.styleable.DailyCoordinatorLayout_content, 0);
+//        int contentLayout = a.getResourceId(R.styleable.DailyCoordinatorLayout_content, 0);
         String title=a.getString(R.styleable.DailyCoordinatorLayout_title);
-
+//
         if (tabLayout != 0) {
             inflate(getContext(), tabLayout, (ViewGroup) findViewById(R.id.tab_container));
         }
 
-        if (contentLayout != 0) {
-            inflate(getContext(), contentLayout, (ViewGroup) findViewById(R.id.content_container));
-        }
+//        if (contentLayout != 0) {
+//            inflate(getContext(), contentLayout, (ViewGroup) findViewById(R.id.content_container));
+//        }
 
         a.recycle();
 
