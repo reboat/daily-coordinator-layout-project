@@ -21,6 +21,7 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
     private int mRightSpace = 0;
     private int mMaxVerticalDistance = 0;
     private int mFixedWidth =0;
+    private float mMinWidth=0;
 
     public DailyCoordinatorBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -46,17 +47,17 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         mHeaderView.getLocalVisibleRect(rect);
         float height = mMaxVerticalDistance - rect.top;
         float scale = height / mMaxVerticalDistance;
-
-
         ViewGroup.LayoutParams params1= mScrolledAnchorView.getLayoutParams();
-        params1.width= (int) (100-100*scale);
-        Log.e(TAG,"width:"+params1.width);
+        params1.width= (int) (mMinWidth-mMinWidth*scale);
+        if(params1.width<0){
+            params1.width= (int) mMinWidth;
+        }
         mScrolledAnchorView.setLayoutParams(params1);
 
         ViewGroup.LayoutParams params = mScrolledView.getLayoutParams();
         params.width = (int) (mScrolledWidth * scale);
-        if (params.width <= 100) {
-            params.width = 100;
+        if (params.width <= mMinWidth) {
+            params.width = (int) mMinWidth;
         }
         mScrolledView.setLayoutParams(params);
         mScrolledView.setTranslationY(mVerticalDistance - mVerticalDistance * scale);
@@ -90,6 +91,7 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
             mFixedWidth =abl.findViewById(R.id.fixed_root).getMeasuredWidth();
         }
 
+        mMinWidth=parent.getContext().getResources().getDimension(R.dimen.scroll_view_min_width);
 
         return super.onLayoutChild(parent, abl, layoutDirection);
     }
