@@ -7,7 +7,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import cn.daily.android.listener.DailyCoordinatorChangeStateListener;
@@ -17,6 +16,8 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
     private DailyCoordinatorChangeStateListener mDailyCoordinatorChangeStateListener;
     private State mCurrentState = State.IDLE;
     private AppBarLayout mAppBarLayout;
+    private String mTitle;
+    private int mTabMoreVisibility;
 
     public DailyCoordinatorLayout(Context context) {
         super(context);
@@ -35,31 +36,26 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
 
     private void init(AttributeSet attrs, int defStyleAttr) {
         inflate(getContext(), R.layout.content_layout, this);
-//        inflate(getContext(), R.layout.search_layout, this);
-
-        final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.DailyCoordinatorLayout, defStyleAttr, 0);
+        final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.DailyCoordinatorLayout, defStyleAttr, 0);
 
         int tabLayout = a.getResourceId(R.styleable.DailyCoordinatorLayout_tab, 0);
-//        int contentLayout = a.getResourceId(R.styleable.DailyCoordinatorLayout_content, 0);
-        String title=a.getString(R.styleable.DailyCoordinatorLayout_title);
-//
         if (tabLayout != 0) {
             inflate(getContext(), tabLayout, (ViewGroup) findViewById(R.id.tab_container));
         }
-
-//        if (contentLayout != 0) {
-//            inflate(getContext(), contentLayout, (ViewGroup) findViewById(R.id.content_container));
-//        }
-
+        mTitle = a.getString(R.styleable.DailyCoordinatorLayout_title);
+        mTabMoreVisibility = a.getInt(R.styleable.DailyCoordinatorLayout_tab_more_visibility,1);
         a.recycle();
-
-        mAppBarLayout = findViewById(R.id.app_bar);
-        mAppBarLayout.addOnOffsetChangedListener(this);
-        TextView titleView=findViewById(R.id.title);
-        titleView.setText(TextUtils.isEmpty(title)?"新闻":title);
     }
 
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        mAppBarLayout = findViewById(R.id.app_bar);
+        mAppBarLayout.addOnOffsetChangedListener(this);
+        findViewById(R.id.tab_more).setVisibility(mTabMoreVisibility==1?VISIBLE:GONE);
+        TextView titleView = findViewById(R.id.title);
+        titleView.setText(TextUtils.isEmpty(mTitle) ? "新闻" : mTitle);
+    }
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
