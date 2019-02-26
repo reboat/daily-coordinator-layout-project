@@ -43,7 +43,8 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
             inflate(getContext(), tabLayout, (ViewGroup) findViewById(R.id.tab_container));
         }
         mTitle = a.getString(R.styleable.DailyCoordinatorLayout_title);
-        mTabMoreVisibility = a.getInt(R.styleable.DailyCoordinatorLayout_tab_more_visibility,1);
+        int visibility = a.getInt(R.styleable.DailyCoordinatorLayout_tab_more_visibility, 1);
+        mTabMoreVisibility = visibility == 1 ? VISIBLE : GONE;
         a.recycle();
     }
 
@@ -52,7 +53,7 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
         super.onFinishInflate();
         mAppBarLayout = findViewById(R.id.app_bar);
         mAppBarLayout.addOnOffsetChangedListener(this);
-        findViewById(R.id.tab_more).setVisibility(mTabMoreVisibility==1?VISIBLE:GONE);
+        findViewById(R.id.tab_more).setVisibility(mTabMoreVisibility);
         TextView titleView = findViewById(R.id.title);
         titleView.setText(TextUtils.isEmpty(mTitle) ? "新闻" : mTitle);
     }
@@ -86,6 +87,10 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
 
     public void setDailyCoordinatorChangeStateListener(DailyCoordinatorChangeStateListener dailyCoordinatorChangeStateListener) {
         mDailyCoordinatorChangeStateListener = dailyCoordinatorChangeStateListener;
+    }
+
+    public void setTabMoreVisibility(int visibility) {
+        mTabMoreVisibility = visibility;
     }
 
     public enum State {
