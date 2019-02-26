@@ -10,7 +10,6 @@
         android:layout_height="match_parent"
         android:background="@android:color/white"
         app:tab="@layout/daily_tab"
-        app:tab_more_visibility="gone"
         tools:context=".MainActivity">
 
         <android.support.v4.view.ViewPager
