@@ -35,7 +35,7 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
 
     private void init(AttributeSet attrs, int defStyleAttr) {
         inflate(getContext(), R.layout.content_layout, this);
-        inflate(getContext(), R.layout.search_layout, this);
+//        inflate(getContext(), R.layout.search_layout, this);
 
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.DailyCoordinatorLayout, defStyleAttr, 0);

@@ -80,6 +80,7 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         mScrolledView = ((View) parent.getParent()).findViewById(R.id.scrolled_view);
         if (mScrolledWidth == 0) {
             mScrolledWidth = mScrolledView.getMeasuredWidth();
+            ((View)mScrolledView.getParent()).bringToFront();
         }
         mScrolledAnchorView = abl.findViewById(R.id.scrolled_anchor_view);
         if (mRightSpace == 0) {
@@ -88,6 +89,8 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         if(mFixedWidth ==0){
             mFixedWidth =abl.findViewById(R.id.fixed_root).getMeasuredWidth();
         }
+
+
         return super.onLayoutChild(parent, abl, layoutDirection);
     }
 
