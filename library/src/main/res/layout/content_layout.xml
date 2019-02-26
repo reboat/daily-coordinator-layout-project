@@ -12,17 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         app:layout_scrollFlags="scroll|enterAlways">
 
         <ImageView
+            android:background="@color/colorPrimary"
             android:id="@+id/header_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />
 
         <LinearLayout
+            android:layout_marginLeft="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
@@ -45,6 +45,7 @@
         </LinearLayout>
 
         <ImageView
+            android:layout_marginRight="15dp"
             android:id="@+id/scrolled_right_view"
             android:layout_width="22dp"
             android:layout_height="22dp"
@@ -92,6 +93,7 @@
             android:src="@android:drawable/ic_menu_search"
             android:visibility="invisible" />
     </LinearLayout>
+
 </android.support.design.widget.AppBarLayout>
 
 
