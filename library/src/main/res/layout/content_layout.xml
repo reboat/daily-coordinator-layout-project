@@ -44,14 +44,20 @@
         </LinearLayout>
 
         <ImageView
+            android:layout_alignParentBottom="true"
             android:id="@+id/scrolled_right_view"
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="80dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginRight="15dp"
             android:src="@mipmap/service" />
     </RelativeLayout>
+
+    <View
+        android:id="@+id/padding"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

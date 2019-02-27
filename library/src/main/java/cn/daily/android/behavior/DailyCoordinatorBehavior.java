@@ -25,6 +25,8 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
     private int mConsumedY = 0;
     private int mFixedTop = 0;
     private float scale;
+    private View mHeaderView;
+    private View mPaddingView;
 
     public DailyCoordinatorBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -57,13 +59,26 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         return super.onStartNestedScroll(parent, child, directTargetChild, target, nestedScrollAxes, type);
     }
 
+    boolean up=true;
+    int top =mFixedTop;
+
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dx, int dy, int[] consumed, int type) {
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);
 
+        Rect headRect = new Rect();
+        mHeaderView.getGlobalVisibleRect(headRect);
         Rect rect = new Rect();
         mFixedView.getGlobalVisibleRect(rect);
+
+        if(rect.top<=top){
+            up=true;
+        }else {
+            up=false;
+        }
+
         mConsumedY = mFixedTop - rect.top;
+        top=rect.top;
         float height = mMaxVerticalDistance - mConsumedY;
         scale = height / mMaxVerticalDistance;
         ViewGroup.LayoutParams params1 = mScrolledAnchorView.getLayoutParams();
@@ -94,11 +109,31 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
             mScrolledAnchorView.setVisibility(View.INVISIBLE);
         }
 
+        if (params1.width == mMinWidth && up) {
+            ViewGroup.LayoutParams params2 = mPaddingView.getLayoutParams();
+            params2.height++;
+            if (params2.height >= 63) {
+                params2.height = 63;
+                mPaddingView.setLayoutParams(params2);
+            }
+        }
+        if (!up){
+            ViewGroup.LayoutParams params2 = mPaddingView.getLayoutParams();
+            params2.height--;
+            if (params2.height <= 0) {
+                params2.height = 0;
+                mPaddingView.setLayoutParams(params2);
+            }
+        }
+
+
     }
 
     @Override
     public boolean onLayoutChild(CoordinatorLayout parent, AppBarLayout abl, int layoutDirection) {
         Log.e(TAG, "into--[onLayoutChild]");
+        mHeaderView = ((View) parent.getParent()).findViewById(R.id.header_view);
+        mPaddingView = ((View) parent.getParent()).findViewById(R.id.padding);
         mScrolledView = ((View) parent.getParent()).findViewById(R.id.scrolled_view);
         if (mScrolledWidth == 0) {
             mScrolledWidth = mScrolledView.getMeasuredWidth();
