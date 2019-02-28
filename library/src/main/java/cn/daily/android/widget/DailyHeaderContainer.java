@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 
 import cn.daily.news.biz.core.nav.Nav;
 
+
 public class DailyHeaderContainer extends FrameLayout {
 
     public DailyHeaderContainer( Context context) {
