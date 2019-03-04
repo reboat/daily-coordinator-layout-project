@@ -36,14 +36,14 @@ public class DailyHeaderContainer extends FrameLayout {
         findViewById(R.id.scrolled_view).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Nav.with(v.getContext()).toPath("/search/index");
+                Nav.with(getContext()).toPath("/news/SearchActivity");
             }
         });
 
         findViewById(R.id.scrolled_right_view).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Nav.with(v.getContext()).toPath("/service/index");
+                Nav.with(getContext()).toPath("/service");
             }
         });
     }
