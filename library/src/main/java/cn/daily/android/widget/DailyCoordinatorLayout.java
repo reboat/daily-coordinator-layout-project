@@ -18,6 +18,7 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
     private AppBarLayout mAppBarLayout;
     private String mTitle;
     private int mTabMoreVisibility;
+    private int mSignVisibility;
 
     public DailyCoordinatorLayout(Context context) {
         super(context);
@@ -45,6 +46,9 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
         mTitle = a.getString(R.styleable.DailyCoordinatorLayout_title);
         int visibility = a.getInt(R.styleable.DailyCoordinatorLayout_tab_more_visibility, 1);
         mTabMoreVisibility = visibility == 1 ? VISIBLE : GONE;
+
+        visibility = a.getInt(R.styleable.DailyCoordinatorLayout_sign_visibility, 1);
+        mSignVisibility = visibility == 1 ? VISIBLE : GONE;
         a.recycle();
     }
 
@@ -54,6 +58,7 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
         mAppBarLayout = findViewById(R.id.app_bar);
         mAppBarLayout.addOnOffsetChangedListener(this);
         findViewById(R.id.tab_more).setVisibility(mTabMoreVisibility);
+        findViewById(R.id.sign).setVisibility(mSignVisibility);
         TextView titleView = findViewById(R.id.title);
         titleView.setText(TextUtils.isEmpty(mTitle) ? "新闻" : mTitle);
     }

@@ -2,7 +2,6 @@ package cn.daily.android.behavior;
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
@@ -25,9 +24,12 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
     private float mMinWidth = 0;
     private int mConsumedY = 0;
     private int mFixedTop = 0;
+    private int mSignDistance = 0;
     private float scale;
     private View mHeaderView;
     private View mPaddingView;
+    private View mSignView;
+    private int[] location3;
 
     public DailyCoordinatorBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -57,30 +59,47 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
             mFixedView.getGlobalVisibleRect(rect);
             mFixedTop = rect.top;
         }
+
+
+        if (location3 == null) {
+            location3 = new int[2];
+            mScrolledAnchorView.getLocationOnScreen(location3);
+            int[] location=new int[2];
+            mScrolledView.getLocationOnScreen(location);
+            mSignDistance=(location3[0]-(location[0]+mScrolledWidth));
+
+            Log.e(TAG,"anchor x:"+location3[0]+" anchor width:"+mScrolledAnchorView.getMeasuredWidth());
+            Log.e(TAG,"search x:"+location[0]+" anchor width:"+mScrolledView.getMeasuredWidth());
+            Log.e(TAG,"distance:"+mSignDistance);
+
+        }
+
+
         return super.onStartNestedScroll(parent, child, directTargetChild, target, nestedScrollAxes, type);
     }
 
-    boolean up=true;
-    int top =mFixedTop;
+    boolean up = true;
+    int top = mFixedTop;
 
     @Override
     public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dx, int dy, int[] consumed, int type) {
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);
-        Log.e(TAG,"into--[onNestedPreScroll]");
+//        Log.e(TAG, "into--[onNestedPreScroll]");
+
 
         Rect headRect = new Rect();
         mHeaderView.getGlobalVisibleRect(headRect);
         Rect rect = new Rect();
         mFixedView.getGlobalVisibleRect(rect);
 
-        if(rect.top<=top){
-            up=true;
-        }else {
-            up=false;
+        if (rect.top <= top) {
+            up = true;
+        } else {
+            up = false;
         }
 
         mConsumedY = mFixedTop - rect.top;
-        top=rect.top;
+        top = rect.top;
         float height = mMaxVerticalDistance - mConsumedY;
         scale = height / mMaxVerticalDistance;
         ViewGroup.LayoutParams params1 = mScrolledAnchorView.getLayoutParams();
@@ -88,6 +107,7 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         if (mMinWidth * scale <= 0) {
             params1.width = (int) mMinWidth;
         }
+        mScrolledView.setTranslationX(mSignDistance-mSignDistance*scale);
         mScrolledAnchorView.setLayoutParams(params1);
 
         ViewGroup.LayoutParams params = mScrolledView.getLayoutParams();
@@ -96,8 +116,6 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
             params.width = (int) mMinWidth;
         }
         mScrolledView.setLayoutParams(params);
-        mScrolledView.setTranslationX(params1.width);
-
         int[] location = new int[2];
         mScrolledAnchorView.getLocationOnScreen(location);
         int[] location2 = new int[2];
@@ -115,8 +133,8 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
             ViewGroup.LayoutParams params2 = mPaddingView.getLayoutParams();
             params2.height++;
 
-            if(headRect.top<0){
-                params2.height=63;
+            if (headRect.top < 0) {
+                params2.height = 63;
             }
 
             if (params2.height >= 63) {
@@ -125,11 +143,11 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
             }
         }
 
-        if (!up){
+        if (!up) {
             ViewGroup.LayoutParams params2 = mPaddingView.getLayoutParams();
             params2.height--;
-            if(rect.top==mFixedTop){
-                params2.height=0;
+            if (rect.top == mFixedTop) {
+                params2.height = 0;
             }
             if (params2.height <= 0) {
                 params2.height = 0;
@@ -146,6 +164,7 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         mHeaderView = ((View) parent.getParent()).findViewById(R.id.header_view);
         mPaddingView = ((View) parent.getParent()).findViewById(R.id.padding);
         mScrolledView = ((View) parent.getParent()).findViewById(R.id.scrolled_view);
+        mSignView = abl.findViewById(R.id.sign);
         if (mScrolledWidth == 0) {
             mScrolledWidth = mScrolledView.getMeasuredWidth();
             ((View) mScrolledView.getParent()).bringToFront();

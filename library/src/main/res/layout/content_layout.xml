@@ -102,6 +102,25 @@
                 android:layout_height="15dp"
                 android:src="@android:drawable/ic_menu_search" />
         </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/sign"
+            android:paddingRight="10dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/sign"
+                android:layout_width="19dp"
+                android:layout_height="13dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="签到"
+                android:textColor="@color/_222222"
+                android:textSize="11sp"
+                />
+        </LinearLayout>
     </LinearLayout>
 </android.support.design.widget.AppBarLayout>
 

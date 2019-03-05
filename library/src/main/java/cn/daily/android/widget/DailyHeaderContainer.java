@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import cn.daily.news.biz.core.nav.Nav;
+//import cn.daily.news.biz.core.nav.Nav;
 
 
 public class DailyHeaderContainer extends FrameLayout {
@@ -33,18 +33,18 @@ public class DailyHeaderContainer extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        findViewById(R.id.scrolled_view).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Nav.with(getContext()).toPath("/news/SearchActivity");
-            }
-        });
-
-        findViewById(R.id.scrolled_right_view).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Nav.with(getContext()).toPath("/service");
-            }
-        });
+//        findViewById(R.id.scrolled_view).setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Nav.with(getContext()).toPath("/news/SearchActivity");
+//            }
+//        });
+//
+//        findViewById(R.id.scrolled_right_view).setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Nav.with(getContext()).toPath("/service");
+//            }
+//        });
     }
 }

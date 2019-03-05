@@ -7,5 +7,9 @@
             <enum name="gone" value="0" />
             <enum name="visible" value="1" />
         </attr>
+        <attr name="sign_visibility">
+            <enum name="gone" value="0" />
+            <enum name="visible" value="1" />
+        </attr>
     </declare-styleable>
 </resources>
