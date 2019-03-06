@@ -2,10 +2,11 @@ package cn.daily.android.behavior;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,6 +17,8 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
     private View mScrolledView;
     private View mScrolledAnchorView;
     private View mFixedView;
+    private View mHeaderView;
+    private View mPaddingView;
     private int mScrolledWidth = 0;
     private int mVerticalDistance = 0;
     private int mRightSpace = 0;
@@ -25,11 +28,8 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
     private int mConsumedY = 0;
     private int mFixedTop = 0;
     private int mSignDistance = 0;
-    private float scale;
-    private View mHeaderView;
-    private View mPaddingView;
-    private View mSignView;
-    private int[] location3;
+    private float mScale;
+    private int[] mAnchorLocation;
 
     public DailyCoordinatorBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -61,17 +61,12 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         }
 
 
-        if (location3 == null) {
-            location3 = new int[2];
-            mScrolledAnchorView.getLocationOnScreen(location3);
+        if (mAnchorLocation == null) {
+            mAnchorLocation = new int[2];
+            mScrolledAnchorView.getLocationOnScreen(mAnchorLocation);
             int[] location=new int[2];
             mScrolledView.getLocationOnScreen(location);
-            mSignDistance=(location3[0]-(location[0]+mScrolledWidth));
-
-            Log.e(TAG,"anchor x:"+location3[0]+" anchor width:"+mScrolledAnchorView.getMeasuredWidth());
-            Log.e(TAG,"search x:"+location[0]+" anchor width:"+mScrolledView.getMeasuredWidth());
-            Log.e(TAG,"distance:"+mSignDistance);
-
+            mSignDistance=(mAnchorLocation[0]-(location[0]+mScrolledWidth));
         }
 
 
@@ -101,27 +96,27 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         mConsumedY = mFixedTop - rect.top;
         top = rect.top;
         float height = mMaxVerticalDistance - mConsumedY;
-        scale = height / mMaxVerticalDistance;
-        ViewGroup.LayoutParams params1 = mScrolledAnchorView.getLayoutParams();
-        params1.width = (int) (mMinWidth - mMinWidth * scale);
-        if (mMinWidth * scale <= 0) {
-            params1.width = (int) mMinWidth;
+        mScale = height / mMaxVerticalDistance;
+        ViewGroup.LayoutParams scrolledAnchorViewLayoutParams = mScrolledAnchorView.getLayoutParams();
+        scrolledAnchorViewLayoutParams.width = (int) (mMinWidth - mMinWidth * mScale);
+        if (mMinWidth * mScale <= 0) {
+            scrolledAnchorViewLayoutParams.width = (int) mMinWidth;
         }
-        mScrolledView.setTranslationX(mSignDistance-mSignDistance*scale);
-        mScrolledAnchorView.setLayoutParams(params1);
+        mScrolledView.setTranslationX(mSignDistance-mSignDistance* mScale);
+        mScrolledAnchorView.setLayoutParams(scrolledAnchorViewLayoutParams);
 
-        ViewGroup.LayoutParams params = mScrolledView.getLayoutParams();
-        params.width = (int) (mScrolledWidth * scale);
-        if (params.width <= mMinWidth) {
-            params.width = (int) mMinWidth;
+        ViewGroup.LayoutParams scrolledViewLayoutParams = mScrolledView.getLayoutParams();
+        scrolledViewLayoutParams.width = (int) (mScrolledWidth * mScale);
+        if (scrolledViewLayoutParams.width <= mMinWidth) {
+            scrolledViewLayoutParams.width = (int) mMinWidth;
         }
-        mScrolledView.setLayoutParams(params);
-        int[] location = new int[2];
-        mScrolledAnchorView.getLocationOnScreen(location);
-        int[] location2 = new int[2];
-        mScrolledView.getLocationOnScreen(location2);
+        mScrolledView.setLayoutParams(scrolledViewLayoutParams);
+        int[] anchorViewLocation = new int[2];
+        mScrolledAnchorView.getLocationOnScreen(anchorViewLocation);
+        int[] scrollViewLocation = new int[2];
+        mScrolledView.getLocationOnScreen(scrollViewLocation);
 
-        if (location[1] <= location2[1]) {
+        if (anchorViewLocation[1] <= scrollViewLocation[1]) {
             mScrolledView.setVisibility(View.INVISIBLE);
             mScrolledAnchorView.setVisibility(View.VISIBLE);
         } else {
@@ -129,33 +124,40 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
             mScrolledAnchorView.setVisibility(View.INVISIBLE);
         }
 
-        if (params1.width == mMinWidth && up) {
-            ViewGroup.LayoutParams params2 = mPaddingView.getLayoutParams();
-            params2.height++;
+
+        if(Build.VERSION.SDK_INT >= 19){
+            addPadding(headRect, rect, scrolledAnchorViewLayoutParams);
+        }
+
+
+    }
+
+    private void addPadding(Rect headRect, Rect rect, ViewGroup.LayoutParams scrolledAnchorViewLayoutParams) {
+        if (scrolledAnchorViewLayoutParams.width == mMinWidth && up) {
+            ViewGroup.LayoutParams paddingViewLayoutParams = mPaddingView.getLayoutParams();
+            paddingViewLayoutParams.height++;
 
             if (headRect.top < 0) {
-                params2.height = 63;
+                paddingViewLayoutParams.height = 63;
             }
 
-            if (params2.height >= 63) {
-                params2.height = 63;
-                mPaddingView.setLayoutParams(params2);
+            if (paddingViewLayoutParams.height >= 63) {
+                paddingViewLayoutParams.height = 63;
+                mPaddingView.setLayoutParams(paddingViewLayoutParams);
             }
         }
 
         if (!up) {
-            ViewGroup.LayoutParams params2 = mPaddingView.getLayoutParams();
-            params2.height--;
+            ViewGroup.LayoutParams paddingViewLayoutParams = mPaddingView.getLayoutParams();
+            paddingViewLayoutParams.height--;
             if (rect.top == mFixedTop) {
-                params2.height = 0;
+                paddingViewLayoutParams.height = 0;
             }
-            if (params2.height <= 0) {
-                params2.height = 0;
-                mPaddingView.setLayoutParams(params2);
+            if (paddingViewLayoutParams.height <= 0) {
+                paddingViewLayoutParams.height = 0;
+                mPaddingView.setLayoutParams(paddingViewLayoutParams);
             }
         }
-
-
     }
 
     @Override
@@ -164,7 +166,6 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         mHeaderView = ((View) parent.getParent()).findViewById(R.id.header_view);
         mPaddingView = ((View) parent.getParent()).findViewById(R.id.padding);
         mScrolledView = ((View) parent.getParent()).findViewById(R.id.scrolled_view);
-        mSignView = abl.findViewById(R.id.sign);
         if (mScrolledWidth == 0) {
             mScrolledWidth = mScrolledView.getMeasuredWidth();
             ((View) mScrolledView.getParent()).bringToFront();
