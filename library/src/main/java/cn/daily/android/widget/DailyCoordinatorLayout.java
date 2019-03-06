@@ -47,7 +47,7 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
         int visibility = a.getInt(R.styleable.DailyCoordinatorLayout_tab_more_visibility, 1);
         mTabMoreVisibility = visibility == 1 ? VISIBLE : GONE;
 
-        visibility = a.getInt(R.styleable.DailyCoordinatorLayout_sign_visibility, 1);
+        visibility = a.getInt(R.styleable.DailyCoordinatorLayout_sign_visibility, 0);
         mSignVisibility = visibility == 1 ? VISIBLE : GONE;
         a.recycle();
     }
