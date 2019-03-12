@@ -87,7 +87,7 @@ public class DailyHeaderContainer extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         mHeaderImageView = findViewById(R.id.header_view);
-        mUpdateTipView = findViewById(R.id.tip_icon);
+        mUpdateTipView = findViewById(R.id.header_service_update_tip);
 
         mUpdateTipView.setOnClickListener(new OnClickListener() {
             @Override
@@ -107,7 +107,7 @@ public class DailyHeaderContainer extends FrameLayout {
             }
         });
 
-        findViewById(R.id.sign).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.header_sign).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Nav.with(getContext()).toPath("/sign/index");
