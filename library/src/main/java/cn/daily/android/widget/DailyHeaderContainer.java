@@ -24,13 +24,13 @@ public class DailyHeaderContainer extends FrameLayout {
     public static final String UPDATE_SERVICE_STATE = "update_service_state";
 
     private ImageView mHeaderImageView;
-    private ImageView mServiceImageView;
+    private View mUpdateTipView;
     private OnHeaderResourceChangeListener mOnHeaderResourceChangeListener;
 
     private BroadcastReceiver mUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mServiceImageView.setSelected(false);
+            mUpdateTipView.setVisibility(GONE);
         }
     };
     private long mServiceVersion = -1;
@@ -66,7 +66,9 @@ public class DailyHeaderContainer extends FrameLayout {
                         @Override
                         public void accept(HeaderResource headerResource) throws Exception {
                             GlideApp.with(getContext()).load(headerResource.headerBackgroundUrl).into(mHeaderImageView);
-                            mServiceImageView.setSelected(SettingManager.getInstance().getServiceVersion() < headerResource.serviceVersion);
+
+                            int visibility=SettingManager.getInstance().getServiceVersion()<headerResource.serviceVersion?VISIBLE:GONE;
+                            mUpdateTipView.setVisibility(visibility);
                             mServiceVersion = headerResource.serviceVersion;
                         }
                     });
@@ -85,9 +87,9 @@ public class DailyHeaderContainer extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         mHeaderImageView = findViewById(R.id.header_view);
-        mServiceImageView = findViewById(R.id.scrolled_right_view);
+        mUpdateTipView = findViewById(R.id.tip_icon);
 
-        mServiceImageView.setOnClickListener(new OnClickListener() {
+        mUpdateTipView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Nav.with(getContext()).toPath("/service");
