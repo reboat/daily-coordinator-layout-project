@@ -67,7 +67,7 @@ public class DailyHeaderContainer extends FrameLayout {
                         public void accept(HeaderResource headerResource) throws Exception {
                             GlideApp.with(getContext()).load(headerResource.headerBackgroundUrl).into(mHeaderImageView);
 
-                            int visibility=SettingManager.getInstance().getServiceVersion()<headerResource.serviceVersion?VISIBLE:GONE;
+                            int visibility = SettingManager.getInstance().getServiceVersion() < headerResource.serviceVersion ? VISIBLE : GONE;
                             mUpdateTipView.setVisibility(visibility);
                             mServiceVersion = headerResource.serviceVersion;
                         }
@@ -106,12 +106,18 @@ public class DailyHeaderContainer extends FrameLayout {
                 Nav.with(getContext()).toPath("/news/SearchActivity");
             }
         });
-
-        findViewById(R.id.header_sign).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.scrolled_anchor_view).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Nav.with(getContext()).toPath("/sign/index");
+                Nav.with(getContext()).toPath("/news/SearchActivity");
             }
         });
+
+//        findViewById(R.id.header_sign).setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Nav.with(getContext()).toPath("/sign/index");
+//            }
+//        });
     }
 }

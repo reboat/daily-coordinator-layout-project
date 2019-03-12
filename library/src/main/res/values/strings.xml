@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DailyCoordinatorLayout</string>
+    <string name="header_sign">签到</string>
 </resources>
