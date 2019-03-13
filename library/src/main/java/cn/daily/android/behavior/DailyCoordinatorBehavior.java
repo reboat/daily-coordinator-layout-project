@@ -5,7 +5,6 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +18,49 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
     private View mFixedView;
     private View mHeaderView;
     private View mPaddingView;
+    /**
+     * 可滑动控件的宽度
+     **/
     private int mScrolledWidth = 0;
+    /**
+     * 可滑动控件距离顶部距离
+     */
     private int mVerticalDistance = 0;
+    /**
+     * 可滑动控件距离右侧距离
+     */
     private int mRightSpace = 0;
+    /**
+     * 可滑动控件总的滑动距离
+     */
     private int mMaxVerticalDistance = 0;
+    /**
+     * 吸顶控件的宽度
+     */
     private int mFixedWidth = 0;
+    /**
+     * 可滑动控件最小宽度
+     */
     private float mMinWidth = 0;
+    /**
+     * 可滑动控件已经滑动的距离
+     */
     private int mConsumedY = 0;
+    /**
+     * 吸顶控件距离顶部的距离
+     */
     private int mFixedTop = 0;
+    /**
+     * 目标控件和签到控件直接的距离
+     */
     private int mSignDistance = 0;
+    /**
+     * 可滑动控件已滑动百分比
+     */
     private float mScale;
+    /**
+     * 目标控件坐标
+     */
     private int[] mAnchorLocation;
 
     public DailyCoordinatorBehavior(Context context, AttributeSet attrs) {
@@ -64,9 +96,9 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         if (mAnchorLocation == null) {
             mAnchorLocation = new int[2];
             mScrolledAnchorView.getLocationOnScreen(mAnchorLocation);
-            int[] location=new int[2];
+            int[] location = new int[2];
             mScrolledView.getLocationOnScreen(location);
-            mSignDistance=(mAnchorLocation[0]-(location[0]+mScrolledWidth));
+            mSignDistance = (mAnchorLocation[0] - (location[0] + mScrolledWidth));
         }
 
 
@@ -102,7 +134,7 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         if (mMinWidth * mScale <= 0) {
             scrolledAnchorViewLayoutParams.width = (int) mMinWidth;
         }
-        mScrolledView.setTranslationX(mSignDistance-mSignDistance* mScale);
+        mScrolledView.setTranslationX(mSignDistance - mSignDistance * mScale);
         mScrolledAnchorView.setLayoutParams(scrolledAnchorViewLayoutParams);
 
         ViewGroup.LayoutParams scrolledViewLayoutParams = mScrolledView.getLayoutParams();
@@ -125,13 +157,20 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         }
 
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             addPadding(headRect, rect, scrolledAnchorViewLayoutParams);
         }
 
 
     }
 
+    /**
+     * 带有透明status bar 防止遮挡tab文字
+     *
+     * @param headRect
+     * @param rect
+     * @param scrolledAnchorViewLayoutParams
+     */
     private void addPadding(Rect headRect, Rect rect, ViewGroup.LayoutParams scrolledAnchorViewLayoutParams) {
         if (scrolledAnchorViewLayoutParams.width == mMinWidth && up) {
             ViewGroup.LayoutParams paddingViewLayoutParams = mPaddingView.getLayoutParams();
@@ -143,8 +182,8 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
 
             if (paddingViewLayoutParams.height >= 63) {
                 paddingViewLayoutParams.height = 63;
-                mPaddingView.setLayoutParams(paddingViewLayoutParams);
             }
+            mPaddingView.setLayoutParams(paddingViewLayoutParams);
         }
 
         if (!up) {
@@ -155,8 +194,8 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
             }
             if (paddingViewLayoutParams.height <= 0) {
                 paddingViewLayoutParams.height = 0;
-                mPaddingView.setLayoutParams(paddingViewLayoutParams);
             }
+            mPaddingView.setLayoutParams(paddingViewLayoutParams);
         }
     }
 
