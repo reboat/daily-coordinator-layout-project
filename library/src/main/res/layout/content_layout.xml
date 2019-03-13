@@ -44,6 +44,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/scrolled_right_view"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_alignParentRight="true"
@@ -61,7 +62,6 @@
                 android:background="@drawable/circle_shape" />
 
             <ImageView
-                android:id="@+id/scrolled_right_view"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_alignParentBottom="true"

@@ -88,8 +88,7 @@ public class DailyHeaderContainer extends FrameLayout {
         super.onFinishInflate();
         mHeaderImageView = findViewById(R.id.header_view);
         mUpdateTipView = findViewById(R.id.header_service_update_tip);
-
-        mUpdateTipView.setOnClickListener(new OnClickListener() {
+        findViewById(R.id.scrolled_right_view).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Nav.with(getContext()).toPath("/service");
