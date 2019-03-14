@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.zjrb.core.common.glide.GlideApp;
 
@@ -25,6 +28,7 @@ public class DailyHeaderContainer extends FrameLayout {
 
     private ImageView mHeaderImageView;
     private View mUpdateTipView;
+    private ViewFlipper mHotWordContainer;
     private OnHeaderResourceChangeListener mOnHeaderResourceChangeListener;
 
     private BroadcastReceiver mUpdateReceiver = new BroadcastReceiver() {
@@ -66,10 +70,22 @@ public class DailyHeaderContainer extends FrameLayout {
                         @Override
                         public void accept(HeaderResource headerResource) throws Exception {
                             GlideApp.with(getContext()).load(headerResource.headerBackgroundUrl).into(mHeaderImageView);
-
                             int visibility = SettingManager.getInstance().getServiceVersion() < headerResource.serviceVersion ? VISIBLE : GONE;
                             mUpdateTipView.setVisibility(visibility);
                             mServiceVersion = headerResource.serviceVersion;
+                            if (headerResource.hot_word_list != null && headerResource.hot_word_list.size() > 0) {
+                                for (int i = 0; i < headerResource.hot_word_list.size(); i++) {
+                                    TextView hotWordView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.hot_word_item, mHotWordContainer, false);
+                                    hotWordView.setText(headerResource.hot_word_list.get(i).content);
+                                    mHotWordContainer.addView(hotWordView, i);
+                                    mHotWordContainer.setFlipInterval(4000);
+                                }
+                            }else{
+                                TextView hotWordView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.hot_word_item, mHotWordContainer, false);
+                                mHotWordContainer.addView(hotWordView);
+                                mHotWordContainer.setAutoStart(false);
+                                mHotWordContainer.stopFlipping();
+                            }
                         }
                     });
         }
@@ -88,6 +104,7 @@ public class DailyHeaderContainer extends FrameLayout {
         super.onFinishInflate();
         mHeaderImageView = findViewById(R.id.header_view);
         mUpdateTipView = findViewById(R.id.header_service_update_tip);
+        mHotWordContainer = findViewById(R.id.hot_word_container);
         findViewById(R.id.scrolled_right_view).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
