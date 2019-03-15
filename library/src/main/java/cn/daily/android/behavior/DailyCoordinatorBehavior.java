@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -63,8 +64,13 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
      */
     private int[] mAnchorLocation;
 
+    private int mStatusBarHeight = 0;
+
     public DailyCoordinatorBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
+        if (mStatusBarHeight == 0) {
+            mStatusBarHeight = getStatusBarHeight(context);
+        }
     }
 
     @Override
@@ -177,11 +183,11 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
             paddingViewLayoutParams.height++;
 
             if (headRect.top < 0) {
-                paddingViewLayoutParams.height = 63;
+                paddingViewLayoutParams.height = mStatusBarHeight;
             }
 
-            if (paddingViewLayoutParams.height >= 63) {
-                paddingViewLayoutParams.height = 63;
+            if (paddingViewLayoutParams.height >= mStatusBarHeight) {
+                paddingViewLayoutParams.height = mStatusBarHeight;
             }
             mPaddingView.setLayoutParams(paddingViewLayoutParams);
         }
@@ -218,9 +224,18 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
             mFixedWidth = mFixedView.getMeasuredWidth();
         }
 
+
         mMinWidth = parent.getContext().getResources().getDimension(R.dimen.scroll_view_min_width);
 
         return super.onLayoutChild(parent, abl, layoutDirection);
     }
 
+    public int getStatusBarHeight(Context context) {
+        int height = 63;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            height = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return height;
+    }
 }
