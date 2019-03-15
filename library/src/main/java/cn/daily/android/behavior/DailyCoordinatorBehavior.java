@@ -157,7 +157,7 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         }
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             addPadding(headRect, rect, scrolledAnchorViewLayoutParams);
         }
 
