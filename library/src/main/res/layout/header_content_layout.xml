@@ -15,6 +15,7 @@
         app:layout_scrollFlags="scroll|enterAlways">
 
         <ImageView
+            android:background="@drawable/header_default_background"
             android:id="@+id/header_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -32,7 +33,7 @@
                 android:id="@+id/icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@mipmap/hearde_logo" />
+                android:src="@drawable/header_logo" />
 
             <TextView
                 android:id="@+id/title"
@@ -60,14 +61,14 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="1dp"
-                android:background="@drawable/circle_shape"
+                android:background="@drawable/header_circle_shape"
                 android:visibility="gone" />
 
             <ImageView
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_alignParentBottom="true"
-                android:src="@drawable/service_selected" />
+                android:src="@drawable/header_service_icon" />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -100,24 +101,23 @@
 
             <ImageView
                 android:id="@+id/tab_more"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
-                android:src="@drawable/tab_more" />
+                android:layout_width="14dp"
+                android:layout_height="19dp"
+                android:src="@drawable/header_tab_more_icon" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/scrolled_anchor_view"
             android:layout_width="0dp"
             android:layout_height="24dp"
-            android:background="@drawable/search_background"
-            android:gravity="center_vertical|right"
-            android:paddingRight="10dp"
+            android:background="@drawable/header_search_background"
+            android:gravity="center"
             android:visibility="invisible">
 
             <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:src="@android:drawable/ic_menu_search" />
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:src="@drawable/header_search_icon" />
         </LinearLayout>
 
         <LinearLayout
@@ -131,12 +131,12 @@
             <ImageView
                 android:layout_width="19dp"
                 android:layout_height="13dp"
-                android:src="@drawable/sign" />
+                android:src="@drawable/header_sigin_icon" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/header_sign"
+                android:text="@string/header_sign_text"
                 android:textColor="@color/_222222"
                 android:textSize="11sp" />
         </LinearLayout>

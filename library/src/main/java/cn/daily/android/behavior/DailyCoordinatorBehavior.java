@@ -189,7 +189,7 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         }
 
 
-        mMinWidth = parent.getContext().getResources().getDimension(R.dimen.scroll_view_min_width);
+        mMinWidth = parent.getContext().getResources().getDimension(R.dimen.header_scroller_view_min_width);
 
         return super.onLayoutChild(parent, abl, layoutDirection);
     }

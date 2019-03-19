@@ -55,7 +55,7 @@ public class DailyHeaderContainer extends FrameLayout {
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        inflate(context, R.layout.search_layout, this);
+        inflate(context, R.layout.header_scroller_layout, this);
     }
 
     @Override
@@ -75,13 +75,13 @@ public class DailyHeaderContainer extends FrameLayout {
                             mServiceVersion = headerResource.serviceVersion;
                             if (headerResource.hot_word_list != null && headerResource.hot_word_list.size() > 0) {
                                 for (int i = 0; i < headerResource.hot_word_list.size(); i++) {
-                                    TextView hotWordView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.hot_word_item, mHotWordContainer, false);
+                                    TextView hotWordView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.header_hot_word_item, mHotWordContainer, false);
                                     hotWordView.setText(headerResource.hot_word_list.get(i).content);
                                     mHotWordContainer.addView(hotWordView, i);
                                     mHotWordContainer.setFlipInterval(4000);
                                 }
                             }else{
-                                TextView hotWordView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.hot_word_item, mHotWordContainer, false);
+                                TextView hotWordView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.header_hot_word_item, mHotWordContainer, false);
                                 mHotWordContainer.addView(hotWordView);
                                 mHotWordContainer.setAutoStart(false);
                                 mHotWordContainer.stopFlipping();
@@ -132,7 +132,7 @@ public class DailyHeaderContainer extends FrameLayout {
 //        findViewById(R.id.header_sign).setOnClickListener(new OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                Nav.with(getContext()).toPath("/sign/index");
+//                Nav.with(getContext()).toPath("/header_sigin_icon/index");
 //            }
 //        });
     }
