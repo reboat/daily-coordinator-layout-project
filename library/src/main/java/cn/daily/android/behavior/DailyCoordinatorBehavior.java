@@ -27,13 +27,13 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
      */
     private int mVerticalDistance = 0;
     /**
-     * 可滑动控件距离右侧距离
+     * 右侧控件的高度（可滑动控件下滑的距离）
      */
-    private int mRightSpace = 0;
+    private float mScrolledVerticalDistance = 0;
     /**
-     * 可滑动控件总的滑动距离
+     * 顶部和搜索框之间的距离
      */
-    private int mMaxVerticalDistance = 0;
+    private float mMaxVerticalDistance = 0;
     /**
      * 吸顶控件的宽度
      */
@@ -106,6 +106,7 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         if (mAnchorLocation == null) {
             mAnchorLocation = new int[2];
             mScrolledAnchorView.getLocationOnScreen(mAnchorLocation);
+
             int[] location = new int[2];
             mScrolledView.getLocationOnScreen(location);
             mSignDistance = (mAnchorLocation[0] - (location[0] + mScrolledWidth));
@@ -126,14 +127,21 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
 
         mConsumedY = mFixedTop - rect.top;
         float height = mMaxVerticalDistance - mConsumedY;
+        //上滑距离和顶部距离搜索框之间距离的比例。图片滑出表示滑动完成
         mScale = height / mMaxVerticalDistance;
         ViewGroup.LayoutParams scrolledAnchorViewLayoutParams = mScrolledAnchorView.getLayoutParams();
         scrolledAnchorViewLayoutParams.width = (int) (mMinWidth - mMinWidth * mScale);
         if (mMinWidth * mScale <= 0) {
             scrolledAnchorViewLayoutParams.width = (int) mMinWidth;
         }
-        mScrolledView.setTranslationX(mSignDistance - mSignDistance * mScale);
         mScrolledAnchorView.setLayoutParams(scrolledAnchorViewLayoutParams);
+
+        // 搜索框右移百分比 上滑距离和服务空间高度的比值
+        float scrolledViewScale = mConsumedY / mScrolledVerticalDistance;
+        if (scrolledViewScale < 1) {
+            mScrolledView.setTranslationX(mSignDistance * scrolledViewScale);
+        }
+
 
         ViewGroup.LayoutParams scrolledViewLayoutParams = mScrolledView.getLayoutParams();
         scrolledViewLayoutParams.width = (int) (mScrolledWidth * mScale);
@@ -180,8 +188,8 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
             ((View) mScrolledView.getParent()).bringToFront();
         }
         mScrolledAnchorView = abl.findViewById(R.id.scrolled_anchor_view);
-        if (mRightSpace == 0) {
-            mRightSpace = ((View) parent.getParent()).findViewById(R.id.scrolled_right_view).getMeasuredWidth();
+        if (mScrolledVerticalDistance == 0) {
+            mScrolledVerticalDistance = ((View) parent.getParent()).findViewById(R.id.scrolled_right_view).getMeasuredHeight();
         }
         mFixedView = abl.findViewById(R.id.fixed_root);
         if (mFixedWidth == 0) {
