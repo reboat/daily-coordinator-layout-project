@@ -8,6 +8,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import cn.daily.android.widget.R;
 
@@ -129,18 +130,25 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         float height = mMaxVerticalDistance - mConsumedY;
         //上滑距离和顶部距离搜索框之间距离的比例。图片滑出表示滑动完成
         mScale = height / mMaxVerticalDistance;
-        ViewGroup.LayoutParams scrolledAnchorViewLayoutParams = mScrolledAnchorView.getLayoutParams();
-        scrolledAnchorViewLayoutParams.width = (int) (mMinWidth - mMinWidth * mScale);
-        if (mMinWidth * mScale <= 0) {
-            scrolledAnchorViewLayoutParams.width = (int) mMinWidth;
-        }
-        mScrolledAnchorView.setLayoutParams(scrolledAnchorViewLayoutParams);
 
         // 搜索框右移百分比 上滑距离和服务空间高度的比值
         float scrolledViewScale = mConsumedY / mScrolledVerticalDistance;
         if (scrolledViewScale < 1) {
             mScrolledView.setTranslationX(mSignDistance * scrolledViewScale);
         }
+
+        LinearLayout.LayoutParams scrolledAnchorViewLayoutParams = (LinearLayout.LayoutParams) mScrolledAnchorView.getLayoutParams();
+        scrolledAnchorViewLayoutParams.width = (int) (mMinWidth - mMinWidth * mScale);
+        if (mMinWidth * mScale <= 0) {
+            scrolledAnchorViewLayoutParams.width = (int) mMinWidth;
+        }
+
+        if(scrolledViewScale<1){
+            scrolledAnchorViewLayoutParams.leftMargin= (int) (scrolledViewScale*40);
+        }
+        mScrolledAnchorView.setLayoutParams(scrolledAnchorViewLayoutParams);
+
+
 
 
         ViewGroup.LayoutParams scrolledViewLayoutParams = mScrolledView.getLayoutParams();
