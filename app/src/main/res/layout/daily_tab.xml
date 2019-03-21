@@ -10,5 +10,5 @@
     app:tabIndicatorColor="@color/colorAccent"
     app:tabIndicatorHeight="4dp"
     app:tabMode="scrollable"
-    app:tabSelectedTextColor="#000"
-    app:tabTextColor="#fff" />
+    app:tabSelectedTextColor="#222222"
+    app:tabTextColor="#808080" />

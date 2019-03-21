@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/app_bar"
     android:layout_width="match_parent"
+    app:elevation="0dp"
+    android:fadingEdge="none"
     android:layout_height="@dimen/header_height"
     android:background="@android:color/transparent"
     app:layout_behavior="cn.daily.android.behavior.DailyCoordinatorBehavior">
@@ -15,10 +17,10 @@
         app:layout_scrollFlags="scroll|enterAlways">
 
         <ImageView
-            android:background="@drawable/header_default_background"
             android:id="@+id/header_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/header_default_background"
             android:scaleType="centerCrop" />
 
         <LinearLayout
@@ -26,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="14dp"
             android:gravity="bottom">
 
             <ImageView
@@ -52,7 +54,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="6dp">
+            android:layout_marginBottom="16dp">
 
             <View
                 android:id="@+id/header_service_update_tip"
@@ -79,13 +81,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/fixed_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,18 +95,30 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <FrameLayout
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:id="@+id/tab_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"></FrameLayout>
+                android:layout_height="match_parent"
+                android:layout_marginRight="30dp"
+                android:layout_weight="1"></LinearLayout>
 
-            <ImageView
+            <LinearLayout
                 android:id="@+id/tab_more"
-                android:layout_width="14dp"
-                android:layout_height="19dp"
-                android:src="@drawable/header_tab_more_icon" />
-        </LinearLayout>
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/header_tab_more_background"
+                android:gravity="right|center_vertical"
+                >
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="19dp"
+                    android:src="@drawable/header_tab_more_icon" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/scrolled_anchor_view"
