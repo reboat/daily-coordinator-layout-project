@@ -28,18 +28,19 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="15dp"
-            android:layout_marginBottom="14dp"
+            android:layout_marginBottom="4dp"
             android:gravity="bottom">
 
             <ImageView
                 android:id="@+id/icon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="32dp"
+                android:layout_height="36dp"
                 android:src="@drawable/header_logo" />
 
             <TextView
+                android:layout_marginLeft="6dp"
                 android:id="@+id/title"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/icon"
                 android:text="新闻"
@@ -54,7 +55,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="6dp">
 
             <View
                 android:id="@+id/header_service_update_tip"

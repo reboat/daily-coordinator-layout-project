@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="header_height">160dp</dimen>
+    <dimen name="header_height">125dp</dimen>
     <dimen name="header_scroller_view_min_width">38dp</dimen>
 </resources>
