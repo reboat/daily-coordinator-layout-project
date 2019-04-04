@@ -6,19 +6,21 @@ import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import cn.daily.android.widget.R;
 
-public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
+public class DailyCoordinatorBehavior extends AppBarLayout.Behavior implements AppBarLayout.OnOffsetChangedListener {
     private static final String TAG = "DailyBehavior";
     private View mScrolledView;
     private View mScrolledAnchorView;
     private View mFixedView;
     private View mHeaderView;
     private View mPaddingView;
+    private AppBarLayout mAppBarLayout;
     /**
      * 可滑动控件的宽度
      **/
@@ -70,6 +72,7 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
     private float mHeaderHeight = 0;
 
     private int mStatusBarHeight = 0;
+
 
     public DailyCoordinatorBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -123,6 +126,18 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);
 //        Log.e(TAG, "into--[onNestedPreScroll]");
 
+        calculateTheSlidingPosition();
+    }
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
+        calculateTheSlidingPosition();
+    }
+
+    /**
+     * 根据顶部控件滑动位置计算其他控件
+     */
+    private void calculateTheSlidingPosition() {
         Rect rect = new Rect();
         mFixedView.getGlobalVisibleRect(rect);
 
@@ -135,6 +150,7 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
         float scrolledViewScale = mConsumedY / mScrolledVerticalDistance;
         if (scrolledViewScale < 1) {
             mScrolledView.setTranslationX(mSignDistance * scrolledViewScale);
+            Log.e("TAG", "mSignDistance * scrolledViewScale:" + mSignDistance * scrolledViewScale);
         }
 
         LinearLayout.LayoutParams scrolledAnchorViewLayoutParams = (LinearLayout.LayoutParams) mScrolledAnchorView.getLayoutParams();
@@ -143,12 +159,10 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
             scrolledAnchorViewLayoutParams.width = (int) mMinWidth;
         }
 
-        if(scrolledViewScale<1){
-            scrolledAnchorViewLayoutParams.leftMargin= (int) (scrolledViewScale*40);
+        if (scrolledViewScale < 1) {
+            scrolledAnchorViewLayoutParams.leftMargin = (int) (scrolledViewScale * 40);
         }
         mScrolledAnchorView.setLayoutParams(scrolledAnchorViewLayoutParams);
-
-
 
 
         ViewGroup.LayoutParams scrolledViewLayoutParams = mScrolledView.getLayoutParams();
@@ -181,7 +195,7 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
 
 
     @Override
-    public boolean onLayoutChild(CoordinatorLayout parent, AppBarLayout abl, int layoutDirection) {
+    public boolean onLayoutChild(final CoordinatorLayout parent, AppBarLayout abl, int layoutDirection) {
 //        Log.e(TAG, "into--[onLayoutChild]");
         mHeaderView = ((View) parent.getParent()).findViewById(R.id.header_view);
         mPaddingView = ((View) parent.getParent()).findViewById(R.id.padding);
@@ -204,6 +218,10 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior {
             mFixedWidth = mFixedView.getMeasuredWidth();
         }
 
+        if (mAppBarLayout == null) {
+            mAppBarLayout = abl;
+            mAppBarLayout.addOnOffsetChangedListener(this);
+        }
 
         mMinWidth = parent.getContext().getResources().getDimension(R.dimen.header_scroller_view_min_width);
 
