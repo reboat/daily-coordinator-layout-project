@@ -58,7 +58,7 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
         mAppBarLayout = findViewById(R.id.app_bar);
         mAppBarLayout.addOnOffsetChangedListener(this);
         findViewById(R.id.tab_more).setVisibility(mTabMoreVisibility);
-        findViewById(R.id.header_sign).setVisibility(mSignVisibility);
+        findViewById(R.id.header_sign_container).setVisibility(mSignVisibility);
         TextView titleView = findViewById(R.id.title);
         titleView.setText(TextUtils.isEmpty(mTitle) ? "新闻" : mTitle);
     }

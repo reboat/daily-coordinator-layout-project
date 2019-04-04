@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.transition.Visibility;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -80,7 +81,7 @@ public class DailyHeaderContainer extends FrameLayout {
                                     mHotWordContainer.addView(hotWordView, i);
                                     mHotWordContainer.setFlipInterval(4000);
                                 }
-                            }else{
+                            } else {
                                 TextView hotWordView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.header_hot_word_item, mHotWordContainer, false);
                                 mHotWordContainer.addView(hotWordView);
                                 mHotWordContainer.setAutoStart(false);
@@ -128,12 +129,23 @@ public class DailyHeaderContainer extends FrameLayout {
                 Nav.with(getContext()).toPath("/news/SearchActivity");
             }
         });
+    }
 
-//        findViewById(R.id.header_sign).setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Nav.with(getContext()).toPath("/header_sigin_icon/index");
-//            }
-//        });
+    public ImageView getSignIconView() {
+        return findViewById(R.id.header_sign_icon);
+    }
+
+    public TextView getSignTextView() {
+        return findViewById(R.id.header_sign_text);
+    }
+
+    public void setSignVisibility(@Visibility.Mode int visibility) {
+        findViewById(R.id.header_sign_container).setVisibility(visibility);
+    }
+
+    public void setOnSignClickListener(View.OnClickListener listener) {
+        if (listener != null) {
+            findViewById(R.id.header_sign_container).setOnClickListener(listener);
+        }
     }
 }
