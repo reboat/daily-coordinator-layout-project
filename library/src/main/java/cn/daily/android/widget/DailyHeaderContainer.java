@@ -35,7 +35,7 @@ public class DailyHeaderContainer extends FrameLayout {
     private BroadcastReceiver mUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            mUpdateTipView.setVisibility(GONE);
+            mUpdateTipView.setSelected(false);
         }
     };
     private long mServiceVersion = -1;
@@ -71,8 +71,8 @@ public class DailyHeaderContainer extends FrameLayout {
                         @Override
                         public void accept(HeaderResource headerResource) throws Exception {
                             GlideApp.with(getContext()).load(headerResource.headerBackgroundUrl).into(mHeaderImageView);
-                            int visibility = SettingManager.getInstance().getServiceVersion() < headerResource.serviceVersion ? VISIBLE : GONE;
-                            mUpdateTipView.setVisibility(visibility);
+                            boolean update = SettingManager.getInstance().getServiceVersion() < headerResource.serviceVersion ? true : false;
+                            mUpdateTipView.setSelected(update);
                             mServiceVersion = headerResource.serviceVersion;
                             if (headerResource.hot_word_list != null && headerResource.hot_word_list.size() > 0) {
                                 for (int i = 0; i < headerResource.hot_word_list.size(); i++) {
@@ -104,7 +104,7 @@ public class DailyHeaderContainer extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         mHeaderImageView = findViewById(R.id.header_view);
-        mUpdateTipView = findViewById(R.id.header_service_update_tip);
+        mUpdateTipView = findViewById(R.id.scrolled_right_icon_view);
         mHotWordContainer = findViewById(R.id.hot_word_container);
         findViewById(R.id.scrolled_right_view).setOnClickListener(new OnClickListener() {
             @Override

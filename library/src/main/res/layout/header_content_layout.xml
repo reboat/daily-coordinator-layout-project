@@ -58,21 +58,12 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="6dp">
 
-            <View
-                android:id="@+id/header_service_update_tip"
-                android:layout_width="4dp"
-                android:layout_height="4dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="1dp"
-                android:background="@drawable/header_circle_shape"
-                android:visibility="gone" />
-
             <ImageView
+                android:id="@+id/scrolled_right_icon_view"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:layout_alignParentBottom="true"
-                android:src="@drawable/header_service_icon" />
+                android:src="@drawable/header_service_icon_selector" />
         </RelativeLayout>
     </RelativeLayout>
 
