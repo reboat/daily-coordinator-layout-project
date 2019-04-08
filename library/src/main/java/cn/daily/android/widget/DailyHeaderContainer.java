@@ -59,39 +59,6 @@ public class DailyHeaderContainer extends FrameLayout {
         inflate(context, R.layout.header_scroller_layout, this);
     }
 
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        Context context = getContext();
-        if (context instanceof OnHeaderResourceChangeListener) {
-            mOnHeaderResourceChangeListener = (OnHeaderResourceChangeListener) context;
-            mOnHeaderResourceChangeListener.onHeaderResourceChange()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<HeaderResource>() {
-                        @Override
-                        public void accept(HeaderResource headerResource) throws Exception {
-                            GlideApp.with(getContext()).load(headerResource.headerBackgroundUrl).into(mHeaderImageView);
-                            boolean update = SettingManager.getInstance().getServiceVersion() < headerResource.serviceVersion ? true : false;
-                            mUpdateTipView.setSelected(update);
-                            mServiceVersion = headerResource.serviceVersion;
-                            if (headerResource.hot_word_list != null && headerResource.hot_word_list.size() > 0) {
-                                for (int i = 0; i < headerResource.hot_word_list.size(); i++) {
-                                    TextView hotWordView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.header_hot_word_item, mHotWordContainer, false);
-                                    hotWordView.setText(headerResource.hot_word_list.get(i).content);
-                                    mHotWordContainer.addView(hotWordView, i);
-                                    mHotWordContainer.setFlipInterval(4000);
-                                }
-                            } else {
-                                TextView hotWordView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.header_hot_word_item, mHotWordContainer, false);
-                                mHotWordContainer.addView(hotWordView);
-                                mHotWordContainer.setAutoStart(false);
-                                mHotWordContainer.stopFlipping();
-                            }
-                        }
-                    });
-        }
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mUpdateReceiver, new IntentFilter(UPDATE_SERVICE_STATE));
-    }
 
     @Override
     public void onDetachedFromWindow() {
@@ -129,6 +96,40 @@ public class DailyHeaderContainer extends FrameLayout {
                 Nav.with(getContext()).toPath("/news/SearchActivity");
             }
         });
+
+        updateInfo();
+    }
+
+    private void updateInfo() {
+        Context context = getContext();
+        if (context instanceof OnHeaderResourceChangeListener) {
+            mOnHeaderResourceChangeListener = (OnHeaderResourceChangeListener) context;
+            mOnHeaderResourceChangeListener.onHeaderResourceChange()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<HeaderResource>() {
+                        @Override
+                        public void accept(HeaderResource headerResource) throws Exception {
+                            GlideApp.with(getContext()).load(headerResource.headerBackgroundUrl).into(mHeaderImageView);
+                            boolean update = SettingManager.getInstance().getServiceVersion() < headerResource.serviceVersion ? true : false;
+                            mUpdateTipView.setSelected(update);
+                            mServiceVersion = headerResource.serviceVersion;
+                            if (headerResource.hot_word_list != null && headerResource.hot_word_list.size() > 0) {
+                                for (int i = 0; i < headerResource.hot_word_list.size(); i++) {
+                                    TextView hotWordView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.header_hot_word_item, mHotWordContainer, false);
+                                    hotWordView.setText(headerResource.hot_word_list.get(i).content);
+                                    mHotWordContainer.addView(hotWordView, i);
+                                    mHotWordContainer.setFlipInterval(4000);
+                                }
+                            } else {
+                                TextView hotWordView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.header_hot_word_item, mHotWordContainer, false);
+                                mHotWordContainer.addView(hotWordView);
+                                mHotWordContainer.setAutoStart(false);
+                                mHotWordContainer.stopFlipping();
+                            }
+                        }
+                    });
+        }
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mUpdateReceiver, new IntentFilter(UPDATE_SERVICE_STATE));
     }
 
     public ImageView getSignIconView() {
