@@ -129,9 +129,13 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior implements A
         calculateTheSlidingPosition();
     }
 
+    int offset=-1;
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-        calculateTheSlidingPosition();
+        if(offset!=i){
+            calculateTheSlidingPosition();
+            offset=i;
+        }
     }
 
     /**
