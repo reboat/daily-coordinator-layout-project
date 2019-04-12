@@ -129,12 +129,13 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior implements A
         calculateTheSlidingPosition();
     }
 
-    int offset=-1;
+    int offset = -1;
+
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
-        if(offset!=i){
+        if (offset != i) {
             calculateTheSlidingPosition();
-            offset=i;
+            offset = i;
         }
     }
 
@@ -146,6 +147,9 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior implements A
         mFixedView.getGlobalVisibleRect(rect);
 
         mConsumedY = mFixedTop - rect.top;
+        if (mConsumedY < 0) {
+            return;
+        }
         float height = mMaxVerticalDistance - mConsumedY;
         //上滑距离和顶部距离搜索框之间距离的比例。图片滑出表示滑动完成
         mScale = height / mMaxVerticalDistance;
