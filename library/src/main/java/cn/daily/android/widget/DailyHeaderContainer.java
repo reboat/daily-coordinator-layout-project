@@ -59,6 +59,11 @@ public class DailyHeaderContainer extends FrameLayout {
         inflate(context, R.layout.header_scroller_layout, this);
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mUpdateReceiver, new IntentFilter(UPDATE_SERVICE_STATE));
+    }
 
     @Override
     public void onDetachedFromWindow() {
@@ -129,7 +134,6 @@ public class DailyHeaderContainer extends FrameLayout {
                         }
                     });
         }
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mUpdateReceiver, new IntentFilter(UPDATE_SERVICE_STATE));
     }
 
     public ImageView getSignIconView() {
