@@ -126,20 +126,23 @@
         </LinearLayout>
 
         <LinearLayout
+            android:orientation="horizontal"
             android:id="@+id/header_sign_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingRight="10dp"
+            android:paddingRight="5dp"
             android:visibility="gone">
 
             <ImageView
+                android:layout_marginLeft="2dp"
                 android:id="@+id/header_sign_icon"
                 android:layout_width="19dp"
-                android:layout_height="13dp"
+                android:layout_height="19dp"
                 android:src="@drawable/header_sign_icon" />
 
             <TextView
+                android:layout_marginLeft="4dp"
                 android:id="@+id/header_sign_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
