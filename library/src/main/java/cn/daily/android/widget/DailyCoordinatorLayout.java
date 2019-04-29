@@ -98,6 +98,11 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
         mTabMoreVisibility = visibility;
     }
 
+    public void updateTabMoreVisibility(int visibility) {
+        findViewById(R.id.tab_more).setVisibility(visibility);
+    }
+
+
     public enum State {
         EXPANDED,
         COLLAPSED,
