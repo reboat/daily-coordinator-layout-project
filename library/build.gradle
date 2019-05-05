@@ -37,5 +37,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    implementation 'cn.daily.android:biz-core:6.0.0.53'
+    implementation ('cn.daily.android:biz-core:6.0.0.53'){
+        exclude group:'cn.daily.android',module:'analytics'
+    }
+    implementation 'cn.daily.android:analytics:6.0.0.3'
+
 }

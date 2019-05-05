@@ -18,6 +18,7 @@ import com.zjrb.core.common.glide.GlideApp;
 
 import cn.daily.android.listener.OnHeaderResourceChangeListener;
 import cn.daily.android.model.HeaderResource;
+import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.db.SettingManager;
 import cn.daily.news.biz.core.nav.Nav;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -86,6 +87,12 @@ public class DailyHeaderContainer extends FrameLayout {
                 if (mServiceVersion != -1) {
                     SettingManager.getInstance().setServiceVersion(mServiceVersion);
                 }
+                new Analytics.AnalyticsBuilder(getContext(), "100015", "AppTabClick", false)
+                        .name("点击服务")
+                        .pageType("导航区")
+                        .clickTabName("服务")
+                        .build()
+                        .send();
             }
         });
 
