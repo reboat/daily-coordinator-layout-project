@@ -135,7 +135,7 @@
             android:visibility="gone">
 
             <ImageView
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="15dp"
                 android:id="@+id/header_sign_icon"
                 android:layout_width="19dp"
                 android:layout_height="19dp"
