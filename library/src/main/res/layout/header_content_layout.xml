@@ -45,7 +45,7 @@
                 android:fontFamily="@font/fzzcysk_zbjt"
                 android:text="新闻"
                 android:textColor="#ff222222"
-                android:textSize="22sp" />
+                android:textSize="22dp" />
         </LinearLayout>
 
         <RelativeLayout
