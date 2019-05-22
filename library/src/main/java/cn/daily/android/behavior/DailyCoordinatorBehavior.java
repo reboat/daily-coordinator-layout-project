@@ -120,15 +120,6 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior implements A
         return super.onStartNestedScroll(parent, child, directTargetChild, target, nestedScrollAxes, type);
     }
 
-
-    @Override
-    public void onNestedPreScroll(CoordinatorLayout coordinatorLayout, AppBarLayout child, View target, int dx, int dy, int[] consumed, int type) {
-        super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type);
-//        Log.e(TAG, "into--[onNestedPreScroll]");
-
-        calculateTheSlidingPosition();
-    }
-
     int offset = -1;
 
     @Override
@@ -143,6 +134,7 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior implements A
      * 根据顶部控件滑动位置计算其他控件
      */
     private void calculateTheSlidingPosition() {
+        Log.e(TAG, "into--[calculateTheSlidingPosition]");
         Rect rect = new Rect();
         mFixedView.getGlobalVisibleRect(rect);
 
@@ -158,7 +150,6 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior implements A
         float scrolledViewScale = mConsumedY / mScrolledVerticalDistance;
         if (scrolledViewScale < 1) {
             mScrolledView.setTranslationX(mSignDistance * scrolledViewScale);
-            Log.e("TAG", "mSignDistance * scrolledViewScale:" + mSignDistance * scrolledViewScale);
         }
 
         LinearLayout.LayoutParams scrolledAnchorViewLayoutParams = (LinearLayout.LayoutParams) mScrolledAnchorView.getLayoutParams();
@@ -169,6 +160,8 @@ public class DailyCoordinatorBehavior extends AppBarLayout.Behavior implements A
 
         if (scrolledViewScale < 1) {
             scrolledAnchorViewLayoutParams.leftMargin = (int) (scrolledViewScale * 40);
+        } else {
+            scrolledAnchorViewLayoutParams.leftMargin = 40;
         }
         mScrolledAnchorView.setLayoutParams(scrolledAnchorViewLayoutParams);
 
