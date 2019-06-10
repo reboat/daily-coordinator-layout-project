@@ -2,6 +2,7 @@ package cn.daily.android.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Parcelable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.text.TextUtils;
@@ -50,6 +51,12 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
         visibility = a.getInt(R.styleable.DailyCoordinatorLayout_sign_visibility, 0);
         mSignVisibility = visibility == 1 ? VISIBLE : GONE;
         a.recycle();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        super.onRestoreInstanceState(state);
+        mAppBarLayout.setExpanded(true);
     }
 
     @Override
