@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import cn.daily.android.listener.DailyCoordinatorChangeStateListener;
+import cn.daily.android.listener.OnDailyCoordinatorOffsetChangedListener;
 
 
 public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarLayout.OnOffsetChangedListener {
     private DailyCoordinatorChangeStateListener mDailyCoordinatorChangeStateListener;
+    private OnDailyCoordinatorOffsetChangedListener mOnDailyCoordinatorOffsetChangedListener;
     private State mCurrentState = State.IDLE;
     private AppBarLayout mAppBarLayout;
     private String mTitle;
@@ -95,10 +97,19 @@ public class DailyCoordinatorLayout extends CoordinatorLayout implements AppBarL
             }
             mCurrentState = State.IDLE;
         }
+
+        if (mOnDailyCoordinatorOffsetChangedListener != null) {
+            mOnDailyCoordinatorOffsetChangedListener.onOffsetChanged(i);
+        }
+
     }
 
     public void setDailyCoordinatorChangeStateListener(DailyCoordinatorChangeStateListener dailyCoordinatorChangeStateListener) {
         mDailyCoordinatorChangeStateListener = dailyCoordinatorChangeStateListener;
+    }
+
+    public void setOnDailyCoordinatorOffsetChangedListener(OnDailyCoordinatorOffsetChangedListener onDailyCoordinatorOffsetChangedListener) {
+        mOnDailyCoordinatorOffsetChangedListener = onDailyCoordinatorOffsetChangedListener;
     }
 
     public void setTabMoreVisibility(int visibility) {
