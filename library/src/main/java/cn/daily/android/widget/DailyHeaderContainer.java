@@ -160,4 +160,9 @@ public class DailyHeaderContainer extends FrameLayout {
             findViewById(R.id.header_sign_container).setOnClickListener(listener);
         }
     }
+
+    public void setHeaderBackground(String imageUrl) {
+        GlideApp.with(getContext()).clear(mHeaderImageView);
+        GlideApp.with(getContext()).load(imageUrl).into(mHeaderImageView);
+    }
 }
